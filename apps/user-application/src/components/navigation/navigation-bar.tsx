@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "@tanstack/react-router";
-import { Menu, Github, ExternalLink, LogIn } from "lucide-react";
+import { Menu, Github, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -12,9 +12,6 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme";
-import { authClient } from "@/lib/auth-client";
-import { AccountDialog } from "@/components/auth/account-dialog";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface NavigationItem {
   label: string;
@@ -40,19 +37,6 @@ const navigationItems: NavigationItem[] = [
 export function NavigationBar() {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
-  const { data: session } = authClient.useSession();
-
-  const handleGoogleSignIn = async () => {
-    await authClient.signIn.social({
-      provider: "google",
-      callbackURL: "/app",
-    });
-  };
-
-  const user = session?.user;
-  const fallbackText = user?.name
-    ? user.name.charAt(0).toUpperCase()
-    : user?.email?.charAt(0).toUpperCase() || "U";
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -63,17 +47,7 @@ export function NavigationBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleSmoothScroll = (elementId: string) => {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  };
-
-  const handleNavClick = (item: NavigationItem) => {
+  const handleNavClick = () => {
     setIsOpen(false);
   };
 
@@ -94,7 +68,7 @@ export function NavigationBar() {
             className="group flex items-center space-x-3 no-underline"
           >
             <div className="flex flex-col">
-              <span className="text-lg lg:text-xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent group-hover:from-primary group-hover:to-primary/80 transition-all duration-300">
+              <span className="text-lg lg:text-xl font-bold bg-linear-to-r from-foreground to-foreground/80 bg-clip-text text-transparent group-hover:from-primary group-hover:to-primary/80 transition-all duration-300">
                 SaaS Starter Kit
               </span>
               <span className="text-xs text-muted-foreground font-medium tracking-wider">
@@ -124,13 +98,13 @@ export function NavigationBar() {
                 ) : (
                   <Link
                     to={item.href}
-                    onClick={() => handleNavClick(item)}
+                    onClick={() => handleNavClick()}
                     className="px-4 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground transition-all duration-300 hover:bg-accent/50 block"
                   >
                     {item.label}
                   </Link>
                 )}
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-primary/80 transition-all duration-300 group-hover:w-3/4" />
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-linear-to-r from-primary to-primary/80 transition-all duration-300 group-hover:w-3/4" />
               </div>
             ))}
 
@@ -138,40 +112,6 @@ export function NavigationBar() {
             <div className="ml-2 pl-2 border-l border-border/30">
               <ThemeToggle variant="ghost" align="end" />
             </div>
-          </div>
-
-          {/* Auth Button - Desktop */}
-          <div className="hidden lg:block">
-            {session ? (
-              <AccountDialog>
-                <Button
-                  variant="ghost"
-                  className="flex items-center gap-2 px-3"
-                >
-                  <Avatar className="h-7 w-7">
-                    <AvatarImage
-                      src={user?.image || undefined}
-                      alt={user?.name || "User"}
-                    />
-                    <AvatarFallback className="bg-primary text-primary-foreground text-xs">
-                      {fallbackText}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="text-sm font-medium">
-                    {user?.name || "Account"}
-                  </span>
-                </Button>
-              </AccountDialog>
-            ) : (
-              <Button
-                onClick={handleGoogleSignIn}
-                variant="default"
-                className="gap-2"
-              >
-                <LogIn className="h-4 w-4" />
-                Sign In
-              </Button>
-            )}
           </div>
 
           {/* Mobile Menu Button + Theme Toggle */}
@@ -193,7 +133,7 @@ export function NavigationBar() {
                 className="w-[300px] bg-background/95 backdrop-blur-xl border-l border-border/50"
               >
                 <SheetHeader className="text-left space-y-1 pb-6">
-                  <SheetTitle className="text-xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+                  <SheetTitle className="text-xl font-bold bg-linear-to-r from-primary to-primary/80 bg-clip-text text-transparent">
                     Navigation
                   </SheetTitle>
                   <SheetDescription className="text-muted-foreground">
@@ -222,7 +162,7 @@ export function NavigationBar() {
                       ) : (
                         <Link
                           to={item.href}
-                          onClick={() => handleNavClick(item)}
+                          onClick={() => handleNavClick()}
                           className="flex items-center w-full px-4 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground transition-all duration-300 hover:bg-accent/50 text-left"
                         >
                           {item.label}
@@ -230,40 +170,6 @@ export function NavigationBar() {
                       )}
                     </div>
                   ))}
-                </div>
-
-                {/* Mobile Auth */}
-                <div className="pt-4 border-t border-border/50">
-                  {session ? (
-                    <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-accent/30">
-                      <Avatar className="h-10 w-10">
-                        <AvatarImage
-                          src={user?.image || undefined}
-                          alt={user?.name || "User"}
-                        />
-                        <AvatarFallback className="bg-primary text-primary-foreground text-sm">
-                          {fallbackText}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium">
-                          {user?.name || "User"}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {user?.email}
-                        </p>
-                      </div>
-                    </div>
-                  ) : (
-                    <Button
-                      onClick={handleGoogleSignIn}
-                      variant="default"
-                      className="w-full gap-2"
-                    >
-                      <LogIn className="h-4 w-4" />
-                      Sign In with Google
-                    </Button>
-                  )}
                 </div>
               </SheetContent>
             </Sheet>

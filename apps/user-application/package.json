@@ -10,15 +10,12 @@
     "cf-typegen": "wrangler types --env-interface Env"
   },
   "dependencies": {
-    "@polar-sh/sdk": "^0.34.17",
-    "@polar-sh/tanstack-start": "^0.1.12",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-collapsible": "^1.1.12",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-scroll-area": "^1.2.10",
     "@radix-ui/react-slot": "^1.2.3",
-    "@repo/data-ops": "workspace:^",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.15",
     "@tanstack/react-query": "^5.90.5",
@@ -27,7 +24,6 @@
     "@tanstack/react-router-devtools": "^1.133.22",
     "@tanstack/react-router-ssr-query": "^1.133.22",
     "@tanstack/react-start": "^1.133.22",
-    "better-auth": "^1.3.29",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "highlight.js": "^11.11.1",

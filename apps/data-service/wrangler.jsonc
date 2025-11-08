@@ -4,7 +4,7 @@
  */
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "saas-kit-data-service",
+  "name": "example-queue-data-service",
   "main": "./src/index.ts",
   "compatibility_date": "2025-04-01",
   "compatibility_flags": ["nodejs_compat"],
@@ -12,4 +12,31 @@
   "observability": {
     "enabled": true,
   },
+  "kv_namespaces": [
+    {
+      "binding": "CACHE",
+      "id": "d9f3892d568547b3bc47f63e6611d840",
+      "remote": true,
+    },
+  ],
+  "queues": {
+    "consumers": [
+      {
+        "queue": "queue-example",
+        "max_batch_timeout": 1,
+        "max_batch_size": 1,
+      },
+    ],
+  },
+  "ai": {
+    "binding": "AI",
+    "remote": true,
+  },
+  "r2_buckets": [
+    {
+      "binding": "BUCKET",
+      "bucket_name": "queue-example",
+      "remote": true,
+    },
+  ],
 }

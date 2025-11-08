@@ -1,10 +1,30 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "tanstack-start-app",
+  "name": "queue-exmaple",
   "compatibility_date": "2025-09-02",
   "compatibility_flags": ["nodejs_compat"],
   "main": "./src/server.ts",
-  "vars": {
-    "MY_VAR": "Hello from Cloudflare",
+  "kv_namespaces": [
+    {
+      "binding": "CACHE",
+      "id": "d9f3892d568547b3bc47f63e6611d840",
+      "remote": true,
+    },
+  ],
+  "queues": {
+    "producers": [
+      {
+        "binding": "QUEUE",
+        "queue": "queue-example",
+        "remote": true,
+      },
+    ],
   },
+  "r2_buckets": [
+    {
+      "binding": "BUCKET",
+      "bucket_name": "queue-example",
+      "remote": true,
+    },
+  ],
 }
