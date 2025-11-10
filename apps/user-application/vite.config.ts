@@ -22,6 +22,7 @@ const config = defineConfig({
       viteEnvironment: {
         name: "ssr",
       },
+      remoteBindings: true,
     }),
   ],
 });

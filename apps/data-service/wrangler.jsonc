@@ -8,10 +8,22 @@
   "main": "./src/index.ts",
   "compatibility_date": "2025-04-01",
   "compatibility_flags": ["nodejs_compat"],
-
   "observability": {
     "enabled": true,
   },
+  "queues": {
+    "consumers": [
+      {
+        "queue": "queue-example",
+        "max_retries": 3,
+        "retry_delay": 2,
+        "dead_letter_queue": "catch-all-queue",
+        "max_batch_size": 4,
+        "max_batch_timeout": 1,
+      },
+    ],
+  },
+
   "kv_namespaces": [
     {
       "binding": "CACHE",
@@ -19,15 +31,7 @@
       "remote": true,
     },
   ],
-  "queues": {
-    "consumers": [
-      {
-        "queue": "queue-example",
-        "max_batch_timeout": 1,
-        "max_batch_size": 1,
-      },
-    ],
-  },
+
   "ai": {
     "binding": "AI",
     "remote": true,

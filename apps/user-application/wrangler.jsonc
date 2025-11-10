@@ -1,16 +1,9 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "queue-exmaple",
-  "compatibility_date": "2025-09-02",
+  "compatibility_date": "2025-11-02",
   "compatibility_flags": ["nodejs_compat"],
   "main": "./src/server.ts",
-  "kv_namespaces": [
-    {
-      "binding": "CACHE",
-      "id": "d9f3892d568547b3bc47f63e6611d840",
-      "remote": true,
-    },
-  ],
   "queues": {
     "producers": [
       {
@@ -20,6 +13,15 @@
       },
     ],
   },
+
+  "kv_namespaces": [
+    {
+      "binding": "CACHE",
+      "id": "d9f3892d568547b3bc47f63e6611d840",
+      "remote": true,
+    },
+  ],
+
   "r2_buckets": [
     {
       "binding": "BUCKET",
